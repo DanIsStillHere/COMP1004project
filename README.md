@@ -1,6 +1,6 @@
 # COMP1004project
 Project Title: 
-Physical Health Companion
+Fitfolio
  
 Project Vision:
 To encourage a healthier lifestyle to the general population through providing an easily manageable and 
