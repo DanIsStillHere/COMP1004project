@@ -43,10 +43,13 @@
         </div>
     `;
 
+    // Array to store routines //
+    var allRoutines = [];
+
     // Function to handle navigation clicks using event delegation //
     $(document).on("click", ".nav-link", function (e) {
         // Prevent default behavior of link //
-        e.preventDefault(); 
+        e.preventDefault();
 
         // Remove active class from all links //
         $(".nav-link").removeClass("active");
@@ -62,7 +65,7 @@
         } else if (menuItem === "Exercise") {
             $(".content").html(exerciseContent);
             // Call function to set up exercise page content //
-            setupExerciseContent(); 
+            setupExerciseContent();
         } else if (menuItem === "Diet") {
             $(".content").html(dietContent);
         } else if (menuItem === "Readings") {
@@ -86,7 +89,7 @@
         // Add event listener for the "Create" button //
         $("#add-routine-form").on("submit", function (e) {
             // Prevent form submission //
-            e.preventDefault(); 
+            e.preventDefault();
 
             // Extract routine name from the form input //
             var routineName = $("#routine-name").val();
@@ -123,16 +126,19 @@
             var routineName = $("#routine-name").val();
             alert("Routine '" + routineName + "' and its contents have been saved.");
 
-            // Create JSON object //
+            // Create JSON object for the current routine //
             var routineObject = {
                 name: routineName,
                 exercises: routine
             };
 
-            // Convert JSON object to string //
-            var jsonString = JSON.stringify(routineObject);
+            // Add the current routine to the array of all routines //
+            allRoutines.push(routineObject);
 
-            // Create a blob with the JSON string // 
+            // Convert the array of all routines to JSON string //
+            var jsonString = allRoutines.map(routine => JSON.stringify(routine)).join("\n");
+
+            // Create a blob with the JSON string //
             var blob = new Blob([jsonString], { type: "application/json" });
 
             // Create a link element to download the JSON file //
@@ -149,7 +155,7 @@
     function displayExercises(routine) {
         var exerciseList = $("#exercise-list");
         // Clear previous list //
-        exerciseList.empty(); 
+        exerciseList.empty();
 
         // Create and append list items for each exercise //
         var ul = $("<ul>");
