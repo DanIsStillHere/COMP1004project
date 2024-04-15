@@ -72,3 +72,15 @@ header {
     display: block;
     margin: 0 auto;
 }
+
+.streak {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.goals {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
