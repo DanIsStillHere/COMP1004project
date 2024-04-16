@@ -71,7 +71,7 @@
             <p>Here you can set your daily calorie and macronutrient goals, log the nutritional information of your favourite meals, and view the progress you have made with your weight!</p>
             <div id="goals">
                 <h3>Daily Goals:</h3>
-                <label for="calories">Calories:</label>
+                <label for="calories">Calories (kcal):</label>
                 <input type="number" id="calories" value="2000">
                 <label for="protein">Protein (g):</label>
                 <input type="number" id="protein" value="50">
@@ -99,7 +99,6 @@
             <label for="current-weight">Current Weight (kg):</label>
             <input type="number" id="current-weight">
             <button type="submit" id="save-weights">Save Weights</button>
-            <button type="submit" id="display-graph">Display Graph</button>
         </div>
     `;
 
@@ -107,7 +106,12 @@
     var readingsContent = `
         <div class="content">
             <h2>Welcome to the Readings Section!</h2>
-            <p>This is the readings section.</p>
+            <p>Here you can find links to various literature that can improve your understanding of physical health as well as find tips for maintaining motivation!</p>
+            <div id="bookImg">
+                <img src="img/blackBook.jpg" alt="Book Background" width="300" height="200" />>
+            </div>
+            <h3>Physical Health Literature:</h3>
+            <!-- Reading links will be displayed here -->
         </div>
     `;
 
@@ -135,6 +139,7 @@
             setupDietContent();
         } else if (menuItem === "Readings") {
             $(".content").html(readingsContent);
+            setupReadingsContent();
         }
     });
 
@@ -360,7 +365,7 @@
             e.preventDefault();
             var mealName = $("#meal-name").val();
 
-            // Check if the meal name exists in the meals array
+            // Check if the meal name exists in the meals array //
             var foundMeal = meals.find(meal => meal.name === mealName);
             if (foundMeal) {
                 displayMeal(foundMeal);
@@ -420,24 +425,24 @@
             e.preventDefault();
             var mealName = $("#meal-name").val();
 
-            // Check if the meal name exists in the meals array
+            // Check if the meal name exists in the meals array //
             var foundMealIndex = meals.findIndex(meal => meal.name === mealName);
             if (foundMealIndex !== -1) {
                 var foundMeal = meals[foundMealIndex];
 
-                // Prompt user to enter new values for each attribute
+                // Prompt user to enter new values for each attribute //
                 var newCalories = parseInt(prompt("Enter the new calorie count (kcal) for the meal:", foundMeal.calories));
                 var newProtein = parseInt(prompt("Enter the new protein content (g) for the meal:", foundMeal.protein));
                 var newFat = parseInt(prompt("Enter the new fat content (g) for the meal:", foundMeal.fat));
                 var newCarbohydrates = parseInt(prompt("Enter the new carbohydrate content (g) for the meal:", foundMeal.carbohydrates));
 
-                // Update meal attributes
+                // Update meal attributes //
                 meals[foundMealIndex].calories = newCalories;
                 meals[foundMealIndex].protein = newProtein;
                 meals[foundMealIndex].fat = newFat;
                 meals[foundMealIndex].carbohydrates = newCarbohydrates;
 
-                // Save updated meals to localStorage
+                // Save updated meals to localStorage //
                 localStorage.setItem("meals", JSON.stringify(meals));
                 displayMeal(meals[foundMealIndex]);
                 alert("Meal '" + mealName + "' has been updated.");
@@ -451,12 +456,12 @@
             e.preventDefault();
             var mealName = $("#meal-name").val();
 
-            // Check if the meal name exists in the meals array
+            // Check if the meal name exists in the meals array //
             var foundMealIndex = meals.findIndex(meal => meal.name === mealName);
             if (foundMealIndex !== -1) {
-                // Remove the meal from the array
+                // Remove the meal from the array //
                 meals.splice(foundMealIndex, 1);
-                // Update localStorage
+                // Update localStorage //
                 localStorage.setItem("meals", JSON.stringify(meals));
                 alert("Meal '" + mealName + "' has been deleted.");
             } else {
@@ -489,6 +494,51 @@
 
 
     }
+
+    // Function to setup the Readings page content //
+    function setupReadingsContent() {
+        var readingLinks = [
+            {
+                title: "NHS: The Benefits of Exercise",
+                url: "https://www.nhs.uk/live-well/exercise/exercise-health-benefits/"
+            },
+            {
+                title: "WHO: How to eat Healthy and the Benefits of a Healthy Diet",
+                url: "https://www.who.int/initiatives/behealthy/healthy-diet#:~:text=A%20healthy%20diet%20is%20essential,are%20essential%20for%20healthy%20diet."
+            },
+            {
+                title: "Psychology Today: How to Motiviate Yourself to be Healthy",
+                url: "https://www.psychologytoday.com/gb/blog/understanding-health-behaviors/202209/8-ways-motivate-yourself-be-healthy"
+            },
+            {
+                title: "HealthDirect: Exercise and Mental Health",
+                url: "https://www.healthdirect.gov.au/exercise-and-mental-health#:~:text=Learn%20more%20here.-,How%20does%20exercise%20help%20my%20mental%20health%3F,you%20from%20negative%20thought%20patterns."
+            }
+        ];
+
+        // Create a list to contain the literature links //
+        var linksList = $("<ul>");
+        readingLinks.forEach(function (link) {
+            // Create a list item for each link //
+            var listItem = $("<li>");
+
+            // Create an anchor element for the link //
+            var anchor = $("<a>").attr("href", link.url).text(link.title);
+
+            // Append the anchor element to the list item //
+            listItem.append(anchor);
+
+            // Append the list item to the list //
+            linksList.append(listItem);
+        });
+
+        // Append the list of literature links to the readings content div //
+        var readingsContentDiv = $(".content");
+        readingsContentDiv.empty(); // Clear previous content //
+        readingsContentDiv.html(readingsContent); // Set main content //
+        readingsContentDiv.find('h3').after(linksList); // Add the literature after its designated heading //
+    }
+
     // Function to display exercises on the page //
     function displayExercises(routine) {
         var exerciseList = $("#exercise-list");
@@ -531,14 +581,14 @@
         exerciseList.append(ul2);
     }
 
-    // Function to display meal information
+    // Function to display meal information //
     function displayMeal(meal) {
         var mealList = $("#meal-list");
 
         // Clear previous content //
         mealList.empty();
 
-        // Create a new list item to display the meal information
+        // Create a new list item to display the meal information //
         var li = $("<li>").html(`
         <strong>Name:</strong> ${meal.name}<br>
         <strong>Calories:</strong> ${meal.calories}kcal<br>
@@ -547,7 +597,7 @@
         <strong>Carbohydrates:</strong> ${meal.carbohydrates}g
     `);
 
-        // Append the list item to the meal list
+        // Append the list item to the meal list //
         mealList.append(li);
     }
 
