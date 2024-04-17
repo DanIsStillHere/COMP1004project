@@ -185,8 +185,8 @@
             // Loop to input exercises //
             for (var i = 0; i < numExercises; i++) {
                 var exerciseName = prompt("Enter the name of exercise " + (i + 1));
-                var exerciseSetRange = prompt("Enter the set range for exercise " + (i + 1));
-                var exerciseRepRange = prompt("Enter the rep range for exercise " + (i + 1));
+                var exerciseSetRange = parseInt(prompt("Enter the set range for exercise " + (i + 1)));
+                var exerciseRepRange = parseInt(prompt("Enter the rep range for exercise " + (i + 1)));
                 var exerciseWeight = prompt("Enter the weight for exercise " + (i + 1));
 
                 // Create an instance of Exercise class //
@@ -300,8 +300,8 @@
                 var numExercises = parseInt(prompt("How many exercises do you wish to update?"));
                 for (var i = 0; i < numExercises; i++) {
                     var exerciseName = prompt("Enter the name of exercise " + (i + 1));
-                    var exerciseSetRange = prompt("Enter the set range for exercise " + (i + 1));
-                    var exerciseRepRange = prompt("Enter the rep range for exercise " + (i + 1));
+                    var exerciseSetRange = parseInt(prompt("Enter the set range for exercise " + (i + 1)));
+                    var exerciseRepRange = parseInt(prompt("Enter the rep range for exercise " + (i + 1)));
                     var exerciseWeight = prompt("Enter the weight for exercise " + (i + 1));
                     var exercise = new Exercise(exerciseName, exerciseSetRange, exerciseRepRange, exerciseWeight);
                     updatedRoutine.push(exercise);
